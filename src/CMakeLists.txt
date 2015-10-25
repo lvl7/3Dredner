@@ -1,19 +1,19 @@
-set(module_name main)
+set(module_name 3DRender)
 project(${module_name} CXX)
 
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/calcualtion/*.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/format/*.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/visualisation/*.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/world/*.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/calcualtion/*.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/format/*.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/visualisation/*.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/world/*.h
 )
 
 set(sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/calcualtion/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/format/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/visualisation/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/world/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/calcualtion/*.cpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/format/*.cpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/visualisation/*.cpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/world/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
 set(all_sources ${sources})
