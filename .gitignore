@@ -1,0 +1,13 @@
+# Ecplipse  -----
+.metadata/
+.cproject
+.project
+.settings
+# Ecplipse =====
+
+# Linux's backup files
+*~
+
+# build
+build/
+bin/
