@@ -1,3 +1,3 @@
 # 3Dredner
 
-Projekt realizowany na Metody Numeryczne
+Projekt realizowany na Metody Numeryczne.
