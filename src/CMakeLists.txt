@@ -20,6 +20,8 @@ set(all_sources ${sources})
 
 add_executable(${module_name} ${all_sources})
 
+target_link_libraries(${module_name} foo)
+
 set(gcc_warnings
     -Wall
     -Wextra
