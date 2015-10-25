@@ -8,6 +8,7 @@
 # Linux's backup files
 *~
 
+.DS_Store
 # build
 build/
 bin/
