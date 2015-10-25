@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(project_ C CXX)
+project(3DRender_project C CXX)
 
 set(CMAKE_COMPILER gcc)
 add_compile_options(-std=c++14)
