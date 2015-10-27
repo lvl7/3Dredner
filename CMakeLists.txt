@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 2.8)
 project(3DRender_project C CXX)
 
 set(CMAKE_COMPILER gcc)
-add_compile_options(-std=c++14)
+add_compile_options(-std=c++11)
 
 if("${CMAKE_COMPILER}" STREQUAL "")
     if(CMAKE_COMPILER_IS_GNUCXX)
-        set(CMAKE_COMPILER gcc)
+        set(CMAKE_COMPILER g++)
     elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
         set(CMAKE_COMPILER clang)
     endif()
