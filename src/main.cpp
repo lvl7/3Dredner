@@ -1,10 +1,19 @@
+
+#include <visualisation/example/cube.h>
+#include <visualisation/example/cylinder.h>
+#include <visualisation/example/distanceBetweenPoints.h>
 #include <iostream>
-#include <foo.h>
 
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
-    Application::Foo foo;
-    foo.print();
-    return 0;
+	showCylinder();
+	std::cout << "byl pierwszy." << std::endl;
+	distanceBetweenPoints();
+	std::cout << "a teraz drugi." << std::endl;
+
+	showCube();
+
+	std::cout << "i trzeci." << std::endl;
+
+	return 0;
 }
