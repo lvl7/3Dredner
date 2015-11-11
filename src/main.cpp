@@ -1,19 +1,21 @@
-
-#include <visualisation/example/cube.h>
-#include <visualisation/example/cylinder.h>
-#include <visualisation/example/distanceBetweenPoints.h>
+#include <format/read.h>
+#include <visualisation/show.h>
+#include <vtkPoints.h>
+#include <vtkPolyData.h>
+#include <vtkSmartPointer.h>
 #include <iostream>
 
-int main()
-{
-	showCylinder();
-	std::cout << "byl pierwszy." << std::endl;
-	distanceBetweenPoints();
-	std::cout << "a teraz drugi." << std::endl;
+int main(int argc, char *argv[]) {
+	if (argc != 2) {
+		std::cerr << "Usage: " << argv[0] << " Filename(.xyz)" << std::endl;
+		return 1;
+	}
 
-	showCube();
 
-	std::cout << "i trzeci." << std::endl;
+	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+	read(argv[1],points);
+
+	show(points);
 
 	return 0;
 }

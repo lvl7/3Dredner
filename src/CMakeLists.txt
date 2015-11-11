@@ -12,6 +12,8 @@ include_directories(
 # 'file(GLOB' let search all *.cpp files
 file(GLOB sources
 	${CMAKE_CURRENT_SOURCE_DIR}/visualisation/example/*.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/visualisation/*.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/format/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
