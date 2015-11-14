@@ -12,3 +12,31 @@
 # build
 build/
 bin/
+
+
+# cmake
+Makefile
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+lib/CMakeFiles/
+lib/CTestTestfile.cmake
+lib/Makefile
+lib/cmake_install.cmake
+lib/foo/CMakeFiles/
+lib/foo/CTestTestfile.cmake
+lib/foo/Makefile
+lib/foo/cmake_install.cmake
+lib/libfoo.a
+src/CMakeFiles/
+src/CTestTestfile.cmake
+src/Makefile
+src/cmake_install.cmake
+test/CMakeFiles/
+test/CTestTestfile.cmake
+test/Makefile
+test/cmake_install.cmake
+test/gmock/
+test/gtest/
+
