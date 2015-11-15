@@ -10,7 +10,7 @@ struct Coordinates {
 
 };
 
-class Matrix {
+class Points {
     std::vector<Coordinates> points;
     
 public:
