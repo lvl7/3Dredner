@@ -3,7 +3,7 @@
 #include <visualisation/example/cylinder.h>
 #include <visualisation/example/distanceBetweenPoints.h>
 #include <iostream>
-#include <calculation/Matrix.h>
+#include <calculation/Points.h>
 
 int main()
 {
@@ -16,8 +16,8 @@ int main()
 //
 //	std::cout << "i trzeci." << std::endl;
 
-    Matrix matrix;
-    matrix.fill("../../../bridge2.xyz"); // TODO: change path
-    matrix.show();
+    Points points;
+    points.fill("../../../bridge2.xyz"); // TODO: change path
+    points.show();
 	return 0;
 }
