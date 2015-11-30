@@ -7,7 +7,6 @@ double getAngle(Coordinates A, Coordinates B, Coordinates C)
     // returns an angle [rad] between vectors BA and BC
     Coordinates BA(A.x - B.x, A.y - B.y, A.z - B.z);
     Coordinates BC(C.x - B.x, C.y - B.y, C.z - B.z);
-    std::cout << C.x << " " << B.x << " ";
     
     double BAMagnitude = sqrt(BA.x * BA.x + BA.y * BA.y + BA.z * BA.z);
     Coordinates BANorm(BA.x / BAMagnitude, BA.y / BAMagnitude, BA.z / BAMagnitude);
