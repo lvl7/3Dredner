@@ -5,7 +5,7 @@ find_package(VTK REQUIRED)
 INCLUDE(${VTK_USE_FILE})
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/include	
 )
 
 
@@ -13,6 +13,7 @@ include_directories(
 file(GLOB sources
 	${CMAKE_CURRENT_SOURCE_DIR}/visualisation/example/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/visualisation/*.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/calculation/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/format/*.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
