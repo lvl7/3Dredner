@@ -2,18 +2,18 @@
 #include <visualisation/example/cube.h>
 #include <visualisation/example/cylinder.h>
 #include <visualisation/example/distanceBetweenPoints.h>
+
+#include <calculation/angle.h>
 #include <iostream>
 
 int main()
 {
-	showCylinder();
-	std::cout << "byl pierwszy." << std::endl;
-	distanceBetweenPoints();
-	std::cout << "a teraz drugi." << std::endl;
 
-	showCube();
-
-	std::cout << "i trzeci." << std::endl;
-
-	return 0;
+    Coordinates A(3, 2, 1);
+    Coordinates B(3, 8, 7);
+    Coordinates C(3, 3, 9);
+    
+    getAngle(A, B, C);
+    
+    return 0;
 }
