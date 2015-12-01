@@ -39,4 +39,14 @@ test/Makefile
 test/cmake_install.cmake
 test/gmock/
 test/gtest/
-
+3DRender_project.build/
+3DRender_project.xcodeproj/
+CMakeScripts/
+lib/foo/3DRender_project.build/
+lib/foo/CMakeScripts/
+lib/foo/foo.xcodeproj/
+src/3DRender.xcodeproj/
+src/3DRender_project.build/
+src/CMakeScripts/
+test/3DRender_project.build/
+test/CMakeScripts/

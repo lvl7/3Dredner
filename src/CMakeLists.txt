@@ -8,6 +8,13 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include	
 )
 
+file(GLOB includes
+    ${CMAKE_SOURCE_DIR}/include/visualisation/example/*.h
+    ${CMAKE_SOURCE_DIR}/include/calculation/*.h
+)
+
+set(all_includes ${includes})
+
 
 # 'file(GLOB' let search all *.cpp files
 file(GLOB sources
@@ -20,7 +27,7 @@ file(GLOB sources
 
 set(all_sources ${sources})
 
-add_executable(${module_name} ${all_sources})
+add_executable(${module_name} ${all_sources} ${all_includes})
 
 target_link_libraries(${module_name} ${VTK_LIBRARIES})
 
