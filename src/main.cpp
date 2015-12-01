@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
 	std::string filepath;
 	double hoodDistance = 50;
-	int numberOfPointsLine = 500;
+	int numberOfPointsLine = 50;
 
 	if (argc != 2) {
 		std::cerr << "Usage: " << argv[0] << " Filename[.xyz]" << std::endl;
@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::vector<unsigned int> line;
+	std::vector<unsigned int> line2;
+	std::vector<unsigned int> line3;
 
 	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 	read(filepath,points);
@@ -30,13 +32,37 @@ int main(int argc, char *argv[]) {
 	LineEdgeDetector lineEdge(points,hoodDistance,numberOfPointsLine);
 	line = lineEdge.getLineIndices();
 
+
+
 	Scene scene;
 	scene.show(points);
 
 	std::cout << "main line size: " << line.size() << std::endl;
-	if( scene.show(points, line) != 0 ){
+	double lineColor[3] = {1, 0, 0};
+	if( scene.show(points, line, lineColor) != 0 ){
 		std::cerr << "show line error.\n";
 	}
+
+	LineEdgeDetector lineEdge2(points, hoodDistance, numberOfPointsLine);
+	line2 = lineEdge2.getLineIndices();
+
+	std::cout << "main line size: " << line.size() << std::endl;
+	lineColor[0] = 0;
+	lineColor[1] = 1; // green
+	if( scene.show(points, line2, lineColor) != 0 ){
+		std::cerr << "show line error.\n";
+	}
+
+	LineEdgeDetector lineEdge3(points, hoodDistance, numberOfPointsLine);
+	std::cout << "main line size: " << line.size() << std::endl;
+	line3 = lineEdge3.getLineIndices();
+	lineColor[1] = 0;
+	lineColor[2] = 1; //blue
+	if( scene.show(points, line3, lineColor) != 0 ){
+		std::cerr << "show line error.\n";
+	}
+
+
 
 	return 0;
 }

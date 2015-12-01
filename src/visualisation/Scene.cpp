@@ -44,7 +44,7 @@ int Scene::show(vtkSmartPointer<vtkPoints> points) {
 }
 
 int Scene::show(vtkSmartPointer<vtkPoints> points,
-		std::vector<unsigned int> linePointsIndices) {
+		std::vector<unsigned int> linePointsIndices, double * color) {
 
 	// Create a cell array to store the lines in and add the lines to it
 	vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
@@ -79,7 +79,7 @@ int Scene::show(vtkSmartPointer<vtkPoints> points,
 
 	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper(mapper);
-	actor->GetProperty()->SetColor(1,0,0);
+	actor->GetProperty()->SetColor(color);
 	actor->GetProperty()->SetLineWidth(2);
 
 	this->renderer->AddActor(actor);
