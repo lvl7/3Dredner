@@ -9,7 +9,8 @@
 #include <vtkVertexGlyphFilter.h>
 #include <cstdlib>
 
-int Scene::show(vtkSmartPointer<vtkPoints> points) {
+int Scene::show(vtkSmartPointer<vtkPoints> points, double pointsSize,
+		double *color) {
 
 	vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
 
@@ -30,7 +31,8 @@ int Scene::show(vtkSmartPointer<vtkPoints> points) {
 
 	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper(mapper);
-	actor->GetProperty()->SetPointSize(2); // size of points
+	actor->GetProperty()->SetPointSize(pointsSize); // size of points
+	actor->GetProperty()->SetColor(color);
 
 	//Add the actor to the scene
 	renderer->AddActor(actor);
@@ -49,8 +51,7 @@ int Scene::show(vtkSmartPointer<vtkPoints> points,
 	// Create a cell array to store the lines in and add the lines to it
 	vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
 
-
-	if(linePointsIndices.size() == 0){
+	if (linePointsIndices.size() == 0) {
 		return EXIT_FAILURE;
 	}
 
@@ -80,7 +81,7 @@ int Scene::show(vtkSmartPointer<vtkPoints> points,
 	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper(mapper);
 	actor->GetProperty()->SetColor(color);
-	actor->GetProperty()->SetLineWidth(2);
+	actor->GetProperty()->SetLineWidth(1.5);
 
 	this->renderer->AddActor(actor);
 	renderWindow->Render();
@@ -89,3 +90,47 @@ int Scene::show(vtkSmartPointer<vtkPoints> points,
 	return EXIT_SUCCESS;
 }
 
+int Scene::showPoints(vtkSmartPointer<vtkPoints> points,
+		std::vector<unsigned int> pointsIndices, double pointsSize,
+		double *color) {
+
+	vtkSmartPointer<vtkPoints> pointsFew = vtkSmartPointer<vtkPoints>::New();
+
+	for(unsigned int i =0; i<pointsIndices.size(); ++i){
+		pointsFew->InsertNextPoint(points->GetPoint(pointsIndices.at(i)));
+	}
+
+
+	vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
+
+	//TODO polydata->intertNextCell
+	polydata->SetPoints(pointsFew);
+
+	vtkSmartPointer<vtkVertexGlyphFilter> glyphFilter = vtkSmartPointer<
+			vtkVertexGlyphFilter>::New();
+
+	glyphFilter->SetInputData(polydata);
+
+	glyphFilter->Update();
+
+	// Visualize
+	// Create a mapper and actor
+	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<
+			vtkPolyDataMapper>::New();
+	mapper->SetInputConnection(glyphFilter->GetOutputPort());
+
+	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+	actor->SetMapper(mapper);
+	actor->GetProperty()->SetPointSize(pointsSize); // size of points
+	actor->GetProperty()->SetColor(color);
+
+	//Add the actor to the scene
+	renderer->AddActor(actor);
+
+	//Render and interact
+	renderWindow->Render();
+	renderWindowInteractor->Start();
+
+	return EXIT_SUCCESS;
+
+}

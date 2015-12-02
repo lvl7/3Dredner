@@ -1,9 +1,6 @@
-#include <calculation/angle.h>
+//#include <calculation/angle.h>
 #include <calculation/LineEdgeDetector.h>
 #include <format/read.h>
-//#include <visualisation/example/cube.h>
-//#include <visualisation/example/cylinder.h>
-//#include <visualisation/example/distanceBetweenPoints.h>
 #include <visualisation/Scene.h>
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
@@ -30,47 +27,60 @@ int main(int argc, char *argv[]) {
 	std::vector<unsigned int> line2;
 	std::vector<unsigned int> line3;
 
+	std::vector<unsigned int> edgePoints1;
+	std::vector<unsigned int> edgePoints2;
+	std::vector<unsigned int> edgePoints3;
+
 	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 	read(filepath, points);
 
-	LineEdgeDetector lineEdge(points, hoodDistance, numberOfPointsLine);
-	line = lineEdge.getLineIndices();
-
 	Scene scene;
-	scene.show(points);
+	double color[3] = { .8, .8, .8 };
+	scene.show(points, 1.5, color);
 
-	std::cout << "main line size: " << line.size() << std::endl;
-	double lineColor[3] = { 1, 0, 0 };
-	if (scene.show(points, line, lineColor) != 0) {
-		std::cerr << "show line error.\n";
-	}
+	// 2rad ~~ 120*
+	LineEdgeDetector lineEdge(points, hoodDistance, numberOfPointsLine, 2);
+	line = lineEdge.getLineIndices();
+	color[0] = .7; // red
+	color[1] = 0;
+	color[2] = 0; // yellow
+	scene.show(points, line, color);
 
-	LineEdgeDetector lineEdge2(points, hoodDistance, numberOfPointsLine);
+	edgePoints1 = lineEdge.getEdgePoints();
+	color[0] = 1;
+	color[1] = 0;
+	color[2] = 0;
+	scene.showPoints(points, edgePoints1, 15, color);
+
+
+
+	LineEdgeDetector lineEdge2(points, hoodDistance, numberOfPointsLine, 2);
 	line2 = lineEdge2.getLineIndices();
+	color[0] = 0;
+	color[1] = .7; // green
+	color[3] = 0;
+	scene.show(points, line2, color);
 
-	std::cout << "main line size: " << line.size() << std::endl;
-	lineColor[0] = 0;
-	lineColor[1] = 1; // green
-	if (scene.show(points, line2, lineColor) != 0) {
-		std::cerr << "show line error.\n";
-	}
+	edgePoints2 = lineEdge2.getEdgePoints();
+	color[0] = 0;
+	color[1] = 1;
+	color[2] = 0;
+	scene.showPoints(points, edgePoints2, 15, color);
 
-	LineEdgeDetector lineEdge3(points, hoodDistance, numberOfPointsLine);
-	std::cout << "main line size: " << line.size() << std::endl;
+
+	LineEdgeDetector lineEdge3(points, hoodDistance, numberOfPointsLine, 2);
 	line3 = lineEdge3.getLineIndices();
-	lineColor[1] = 0;
-	lineColor[2] = 1; //blue
+	color[0] = 0;
+	color[1] = 0;
+	color[2] = .7; //blue
+	scene.show(points, line3, color);
 
-	if (scene.show(points, line3, lineColor) != 0) {
-		std::cerr << "show line error.\n";
-	}
+	edgePoints3 = lineEdge3.getEdgePoints();
+	color[0] = 0;
+	color[1] = 0;
+	color[2] = 1;
+	scene.showPoints(points, edgePoints3, 15, color);
 
-
-	Coordinates A(3, 2, 1);
-	Coordinates B(3, 8, 7);
-	Coordinates C(3, 3, 9);
-
-	getAngle(A, B, C);
 
 	return 0;
 }

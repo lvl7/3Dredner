@@ -28,11 +28,17 @@ public:
 		renderWindowInteractor->SetInteractorStyle(style);
 
 	}
-
-	int show(vtkSmartPointer<vtkPoints> points);
+	/*
+	 * color[3] = r, g, b.  1 = max, 0 = min
+	 */
+	int show(vtkSmartPointer<vtkPoints> points, double pointsSize, double * color);
 	/*
 	 * color[3] = r, g, b.  1 = max, 0 = min
 	 */
 	int show(vtkSmartPointer<vtkPoints> points,
 			std::vector<unsigned int> linePointsIndices, double * color);
+
+	int showPoints(vtkSmartPointer<vtkPoints> points,
+				std::vector<unsigned int> pointsIndices, double pointsSize,
+				double *color);
 };

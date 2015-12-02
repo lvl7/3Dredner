@@ -1,9 +1,10 @@
+#include <calculation/angle.h>
 #include <calculation/LineEdgeDetector.h>
 #include <vtkMath.h>
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
-#include <utility>
+//#include <iostream>
+//#include <utility>
 
 /**
  * return:
@@ -17,7 +18,11 @@ int LineEdgeDetector::findLine() {
 	unsigned int centerHoodNextIndex;
 
 	double tempPoint1[3];
-	double tempPoint2[3];
+//	double tempPoint2[3];
+
+	double prvCenterPoint[3];
+	double tsCenterPoint[3];
+	double nextCentrePoint[3];
 
 	double tempDistance;
 
@@ -56,28 +61,39 @@ int LineEdgeDetector::findLine() {
 	for (unsigned int i = 0; i < this->numberOfPoints; ++i) {
 
 		//find the farest point from hood to previous center point.
-		this->points->GetPoint(centerHoodIndex, tempPoint1);
-		this->points->GetPoint(centerHoodPreviousIndex, tempPoint2);
+		this->points->GetPoint(centerHoodIndex, tsCenterPoint);
+		this->points->GetPoint(centerHoodPreviousIndex, prvCenterPoint);
 
-		lastDistance = vtkMath::Distance2BetweenPoints(tempPoint1, tempPoint2);
+		lastDistance = vtkMath::Distance2BetweenPoints(tsCenterPoint, prvCenterPoint);
 
 		for (unsigned int i = 0; i < hood.size(); ++i) {
 			this->points->GetPoint(hood.at(i).first, tempPoint1);
-			this->points->GetPoint(centerHoodPreviousIndex, tempPoint2);
+//			this->points->GetPoint(centerHoodPreviousIndex, tempPoint2);
 
 			// if squared distance between center of previous hood and member of hood > lastDistance
 			if ((tempDistance = vtkMath::Distance2BetweenPoints(tempPoint1,
-					tempPoint2)) > lastDistance) {
+					prvCenterPoint)) > lastDistance) {
 
 				lastDistance = tempDistance;
 				centerHoodNextIndex = hood.at(i).first;
 			}
 		}
 
+		// check angle between centers
+		this->points->GetPoint(centerHoodNextIndex, nextCentrePoint);
+		Coordinates pprv(prvCenterPoint[0],prvCenterPoint[1],prvCenterPoint[2]);
+		Coordinates pthis(tsCenterPoint[0],tsCenterPoint[1],tsCenterPoint[2]);
+		Coordinates pnext(nextCentrePoint[0],nextCentrePoint[1],nextCentrePoint[2]);
+
+		if( getAngle(pprv, pthis, pnext)< this->angleOfEdge){
+			edgePoints.push_back(centerHoodIndex);
+		}
+
 		centerHoodPreviousIndex = centerHoodIndex;
 		centerHoodIndex = centerHoodNextIndex;
 		hood = findHood(centerHoodIndex);
 		lineIndices.push_back(centerHoodIndex);
+
 	}
 
 //	for (unsigned int i = 0; i < hood.size(); ++i) {

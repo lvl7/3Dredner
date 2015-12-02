@@ -18,7 +18,6 @@ double getAngle(Coordinates A, Coordinates B, Coordinates C)
     
     
     double angle = acos(res);
-    std::cout << "Angle: " << angle;
     
     return angle;
 }

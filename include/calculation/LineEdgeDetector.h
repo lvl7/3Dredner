@@ -14,9 +14,12 @@ class LineEdgeDetector {
 	 * chosen index of points making line
 	 */
 	std::vector<unsigned int> lineIndices;
+	std::vector<unsigned int> edgePoints;
 
 	double maxDistanceSquared;
 	unsigned int numberOfPoints;
+
+	double angleOfEdge;
 
 	int findLine();
 	/**
@@ -27,8 +30,9 @@ class LineEdgeDetector {
 
 public:
 	LineEdgeDetector(vtkPoints *points, double maxDistanceSquared,
-			unsigned int numberOfPoints) :
-				maxDistanceSquared(maxDistanceSquared), numberOfPoints(numberOfPoints) {
+			unsigned int numberOfPoints, double angleOfEdge) :
+			maxDistanceSquared(maxDistanceSquared), numberOfPoints(
+					numberOfPoints), angleOfEdge(angleOfEdge) {
 
 		this->points = points;
 
@@ -36,7 +40,11 @@ public:
 	}
 
 	std::vector<unsigned int> getLineIndices() {
-		return lineIndices;
+		return this->lineIndices;
+	}
+
+	std::vector<unsigned int> getEdgePoints() {
+		return this->edgePoints;
 	}
 
 };
