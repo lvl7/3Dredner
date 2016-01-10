@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
 #include <iostream>

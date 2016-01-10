@@ -27,6 +27,9 @@ std::vector<double> gauss(std::vector<std::vector<double>> A)
         if(A[i][i] == 0)
         {
             std::vector<double> empty;
+
+            //TODO
+            std::cout << "empty!\n";
             return empty;  // check if not empty
         }
         
