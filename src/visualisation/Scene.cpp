@@ -9,7 +9,7 @@
 #include <vtkVertexGlyphFilter.h>
 #include <cstdlib>
 
-int Scene::show(vtkSmartPointer<vtkPoints> points, double pointsSize,
+int Scene::showPoints(vtkSmartPointer<vtkPoints> points, double pointsSize,
 		double *color) {
 
 	vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
@@ -45,7 +45,53 @@ int Scene::show(vtkSmartPointer<vtkPoints> points, double pointsSize,
 
 }
 
-int Scene::show(vtkSmartPointer<vtkPoints> points,
+int Scene::showLine(vtkSmartPointer<vtkPoints> linePoints, double * color){
+
+
+	// Create a cell array to store the lines in and add the lines to it
+	vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+
+	if (linePoints->GetNumberOfPoints() == 0) {
+		throw "line has 0 points.\n";
+	}
+
+	for (unsigned int i = 0; i < linePoints->GetNumberOfPoints() - 1; i++) {
+
+		vtkSmartPointer<vtkLine> line = vtkSmartPointer<vtkLine>::New();
+		line->GetPointIds()->SetId(0, i);
+		line->GetPointIds()->SetId(1, i+1);
+		lines->InsertNextCell(line);
+	}
+
+	// Create a polydata to store everything in
+	vtkSmartPointer<vtkPolyData> linesPolyData =
+			vtkSmartPointer<vtkPolyData>::New();
+
+	// Add the points to the dataset
+	linesPolyData->SetPoints(linePoints);
+
+	// Add the lines to the dataset
+	linesPolyData->SetLines(lines);
+
+	// Setup actor and mapper
+	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<
+			vtkPolyDataMapper>::New();
+	mapper->SetInputData(linesPolyData);
+
+	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+	actor->SetMapper(mapper);
+	actor->GetProperty()->SetColor(color);
+	actor->GetProperty()->SetLineWidth(1.5);
+
+	this->renderer->AddActor(actor);
+	renderWindow->Render();
+	renderWindowInteractor->Start();
+
+	return EXIT_SUCCESS;
+}
+
+
+int Scene::showLineFromPoinst(vtkSmartPointer<vtkPoints> points,
 		std::vector<unsigned int> linePointsIndices, double * color) {
 
 	// Create a cell array to store the lines in and add the lines to it
@@ -90,7 +136,7 @@ int Scene::show(vtkSmartPointer<vtkPoints> points,
 	return EXIT_SUCCESS;
 }
 
-int Scene::showPoints(vtkSmartPointer<vtkPoints> points,
+int Scene::showPointsFromPoints(vtkSmartPointer<vtkPoints> points,
 		std::vector<unsigned int> pointsIndices, double pointsSize,
 		double *color) {
 
