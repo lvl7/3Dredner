@@ -31,14 +31,22 @@ public:
 	/*
 	 * color[3] = r, g, b.  1 = max, 0 = min
 	 */
-	int show(vtkSmartPointer<vtkPoints> points, double pointsSize, double * color);
+	int showPoints(vtkSmartPointer<vtkPoints> points, double pointsSize,
+			double * color);
 	/*
 	 * color[3] = r, g, b.  1 = max, 0 = min
 	 */
-	int show(vtkSmartPointer<vtkPoints> points,
-			std::vector<unsigned int> linePointsIndices, double * color);
+	int showLine(vtkSmartPointer<vtkPoints> linePoints, double * color);
 
-	int showPoints(vtkSmartPointer<vtkPoints> points,
-				std::vector<unsigned int> pointsIndices, double pointsSize,
-				double *color);
+	/*
+	 * color[3] = r, g, b.  1 = max, 0 = min
+	 */
+	int showLineFromPoinst(vtkSmartPointer<vtkPoints> points,
+			std::vector<unsigned int> linePointsIndices, double * color);
+	/*
+	 * color[3] = r, g, b.  1 = max, 0 = min
+	 */
+	int showPointsFromPoints(vtkSmartPointer<vtkPoints> points,
+			std::vector<unsigned int> pointsIndices, double pointsSize,
+			double *color);
 };

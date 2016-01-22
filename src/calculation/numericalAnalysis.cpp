@@ -11,40 +11,26 @@
  * 1 - y
  * 2 - z
  */
-std::vector<double> interpolationPolynomial(int axis,
+std::vector<double> interpolationPolynomial(int domain, int codomain,
 		vtkSmartPointer<vtkPoints> line) {
 
-//	std::vector<double> polynomial; // vector of coefficients
-	std::vector<unsigned int> axes(2);
 	// for interpolation
 	std::vector<std::vector<double>> matrix(line->GetNumberOfPoints(),
 			std::vector<double>(line->GetNumberOfPoints() + 1));
 	std::vector<double> temp(line->GetNumberOfPoints() + 1);
 
-	switch (axis) {
-	case 0:
-		axes.at(0) = 1;
-		axes.at(1) = 2;
-		break;
-	case 1:
-		axes.at(0) = 0;
-		axes.at(1) = 2;
-		break;
-	case 2:
-		axes.at(0) = 0;
-		axes.at(1) = 1;
-		break;
-	default:
-		throw "Wrong axis.\n";
+
+	if(domain == codomain){
+		throw "Wrong axis ( interpolation ).\n";
 	}
 
 	for (int nop = 0; nop < line->GetNumberOfPoints(); ++nop) {
 		for (int coor = 0; coor < line->GetNumberOfPoints(); ++coor) {
-			matrix.at(nop).at(coor) = pow(line->GetPoint(nop)[axes.at(0)], line->GetNumberOfPoints()-coor-1);
+			matrix.at(nop).at(coor) = pow(line->GetPoint(nop)[domain], line->GetNumberOfPoints()-coor-1);
 
 		}
 		matrix.at(nop).at(line->GetNumberOfPoints()) =
-				line->GetPoint(nop)[axes.at(1)];
+				line->GetPoint(nop)[codomain];
 	}
 
 	//TODO ---------
