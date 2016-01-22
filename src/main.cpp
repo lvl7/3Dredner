@@ -63,10 +63,11 @@ int main(int argc, char *argv[]) {
 
 
 	polynomial = interpolationPolynomial(2, 1, lineTemp);
-	std::cout << "Polynomial(" << polynomial.size() << ")\n";
-	for (unsigned int i = 0; i < polynomial.size(); ++i) {
-		std::cout << polynomial.at(i) << " ";
-	}
+//	std::cout << "Polynomial(" << polynomial.size() << ")\n";
+//	for (unsigned int i = 0; i < polynomial.size(); ++i) {
+//		std::cout << polynomial.at(i) << " ";
+//	}
+//	std::cout << endl;
 
 	lineTemp2 = polynomialVector2vtkPoints(0, -10, polynomial, 1, 3, 18, 0.5);
 

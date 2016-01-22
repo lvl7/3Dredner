@@ -33,18 +33,5 @@ std::vector<double> interpolationPolynomial(int domain, int codomain,
 				line->GetPoint(nop)[codomain];
 	}
 
-	//TODO ---------
-	std::cout << "vin\n";
-	for (unsigned int i = 0; i < matrix.size(); ++i) {
-
-		for (unsigned int j = 0; j < matrix.at(i).size(); ++j) {
-			std::cout << matrix.at(i).at(j) << " ";
-		}
-		std::cout << std::endl;
-	}
-	std::cout << "=====" << endl;
-
-	//TODO =========
-
 	return gauss(matrix);
 }
