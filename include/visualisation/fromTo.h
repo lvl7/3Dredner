@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vtkPoints.h>
+#include <vtkSmartPointer.h>
+#include <vector>
+
 /**
  * polynomial2vtkPoints show polynomial parallel to \arg\ wichAxisHeight \arg\ on axis height.
  *

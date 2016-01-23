@@ -1,9 +1,9 @@
 #include <calculation/gauss.h>
-
+#include <visualisation/fromTo.h>
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
 #include <vector>
-
+#include <stdexcept>
 
 void addPointConstXDomainY(vtkSmartPointer<vtkPoints> line, double height,
 		double domainValue, double codomainValue) {
@@ -30,7 +30,7 @@ void addPointConstZDomainY(vtkSmartPointer<vtkPoints> line, double height,
 	line->InsertNextPoint(codomainValue, domainValue, height);
 }
 
-vtkSmartPointer<vtkPoints> polynomialVector2vtkPoints(int wichAxisHeight,
+vtkSmartPointer<vtkPoints> polynomialVector2vtkPoints(int wichAxisConst,
 		double axisHeight, std::vector<double> polynomial, int wichAxisDomain,
 		double from, double to, double samplingDistance) {
 
@@ -39,7 +39,7 @@ vtkSmartPointer<vtkPoints> polynomialVector2vtkPoints(int wichAxisHeight,
 
 
 	//TODO if else will better look?
-	switch (wichAxisHeight) {
+	switch (wichAxisConst) {
 	case 0:
 
 		switch (wichAxisDomain) {
@@ -50,7 +50,7 @@ vtkSmartPointer<vtkPoints> polynomialVector2vtkPoints(int wichAxisHeight,
 			addPoint = addPointConstXDomainZ;
 			break;
 		default:
-			throw "Wrong codomain axis.\n";
+			throw std::runtime_error("Wrong codomain axis.");
 		}
 		break;
 
@@ -63,7 +63,7 @@ vtkSmartPointer<vtkPoints> polynomialVector2vtkPoints(int wichAxisHeight,
 			addPoint = addPointConstYDomainZ;
 			break;
 		default:
-			throw "Wrong codomain axis.\n";
+			throw std::runtime_error("Wrong codomain axis.");
 		}
 		break;
 
@@ -76,11 +76,11 @@ vtkSmartPointer<vtkPoints> polynomialVector2vtkPoints(int wichAxisHeight,
 			addPoint = addPointConstZDomainY;
 			break;
 		default:
-			throw "Wrong codomain axis.\n";
+			throw std::runtime_error("Wrong codomain axis.");
 		}
 		break;
 	default:
-		throw "Wrong domain axis.\n";
+		throw std::runtime_error("Wrong domain axis.");
 	}
 
 	// compute codomain

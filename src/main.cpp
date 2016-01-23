@@ -1,13 +1,14 @@
 //#include <calculation/gauss.h>
 //#include <calculation/LineEdgeDetector.h>
 
-#include <calculation/LineEdgeDetector.h>
+#include <calculation/linePoints.h>
 #include <calculation/numericalAnalysis.h>
 #include <format/read.h>
 #include <visualisation/fromTo.h>
 #include <visualisation/Scene.h>
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
+#include <exception>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,8 +26,6 @@ int main(int argc, char *argv[]) {
 		filepath = argv[1];
 	}
 
-
-
 	std::vector<unsigned int> line;
 	std::vector<unsigned int> line2;
 	std::vector<unsigned int> line3;
@@ -42,44 +41,205 @@ int main(int argc, char *argv[]) {
 	double color[3] = { .8, .8, .8 };
 	scene.showPoints(points, 1.5, color);
 
-
 	//TODO ----------
-	vtkSmartPointer<vtkPoints> lineTemp = vtkSmartPointer<vtkPoints>::New();
-	vtkSmartPointer<vtkPoints> lineTemp2 = vtkSmartPointer<vtkPoints>::New();
+	double colorPoints[3] = { .7, .7, 0 };
+	double colorLine[3] = { 0 , .7, .7 };
+	vtkSmartPointer<vtkPoints> lineInterpolation;
+	vtkSmartPointer<vtkPoints> lineLineFromTo;
+	int axisDomain;
+	int axisCodomain;
+	int axisConst;
+	double height;
+	double from;
+	double to;
+	double maxError = 0.3;
+
 	std::vector<double> polynomial;
+	std::vector<std::vector<bool>> positionFromTo(2, std::vector<bool>(3));
 
-	// good for 1 const axis;
-	//	lineTemp->InsertNextPoint(1, 2, 8);
-	//	lineTemp->InsertNextPoint(5, 6, 7);
-	//	lineTemp->InsertNextPoint(4, -1, 1);
-	//	lineTemp->InsertNextPoint(7, 2, 3);
+	axisDomain = 0;
+	axisCodomain = 1;
+	axisConst = 2;
+	positionFromTo.at(0).at(0) = false;
+	positionFromTo.at(0).at(1) = false;
+	positionFromTo.at(0).at(2) = false;
+	positionFromTo.at(1).at(0) = true;
+	positionFromTo.at(1).at(1) = false;
+	positionFromTo.at(1).at(2) = false;
 
+	height = 10;
+	from = -15;
+	to = 15;
 
-		lineTemp->InsertNextPoint(4, 4, 8);
-		lineTemp->InsertNextPoint(6, 5, 7);
-		lineTemp->InsertNextPoint(8, 3, 1);
-		lineTemp->InsertNextPoint(13, 4, 3);
-		lineTemp->InsertNextPoint(18, 4, 3);
+	lineLineFromTo = computeLine(points, positionFromTo, 2, 6, maxError);
+	scene.showPoints(lineLineFromTo, 10, colorPoints);
 
+	polynomial = interpolationPolynomial(axisDomain, axisCodomain, lineLineFromTo);
+	try {
+		lineInterpolation = polynomialVector2vtkPoints(axisConst, height, polynomial, axisDomain, from, to,
+				0.5);
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
 
-	polynomial = interpolationPolynomial(2, 1, lineTemp);
-//	std::cout << "Polynomial(" << polynomial.size() << ")\n";
-//	for (unsigned int i = 0; i < polynomial.size(); ++i) {
-//		std::cout << polynomial.at(i) << " ";
-//	}
-//	std::cout << endl;
-
-	lineTemp2 = polynomialVector2vtkPoints(0, -10, polynomial, 1, 3, 18, 0.5);
-
-	color[0] = .7;
-	color[1] = .7; // green
-	color[2] = 0;
-	scene.showLine(lineTemp2, color);
-
-	//TODO ==========
+	scene.showLine(lineInterpolation, colorLine);
 
 
 
+//----from (-10,10,10)
+	axisDomain = 1;
+	axisCodomain = 0;
+	axisConst = 2;
+	positionFromTo.at(0).at(0) = false;
+	positionFromTo.at(0).at(1) = false;
+	positionFromTo.at(0).at(2) = false;
+	positionFromTo.at(1).at(0) = false;
+	positionFromTo.at(1).at(1) = true;
+	positionFromTo.at(1).at(2) = false;
+
+	height = 10;
+	from = 5;
+	to = 25;
+
+	lineLineFromTo = computeLine(points, positionFromTo, 2, 6, maxError);
+	scene.showPoints(lineLineFromTo, 10, colorPoints);
+
+	polynomial = interpolationPolynomial(axisDomain, axisCodomain, lineLineFromTo);
+	try {
+		lineInterpolation = polynomialVector2vtkPoints(axisConst, height, polynomial, axisDomain, from, to,
+				0.5);
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
+
+	scene.showLine(lineInterpolation, colorLine);
+
+
+
+
+	axisDomain = 2;
+	axisCodomain = 1;
+	axisConst = 0;
+	positionFromTo.at(0).at(0) = false;
+	positionFromTo.at(0).at(1) = false;
+	positionFromTo.at(0).at(2) = false;
+	positionFromTo.at(1).at(0) = false;
+	positionFromTo.at(1).at(1) = false;
+	positionFromTo.at(1).at(2) = true;
+
+	height = -10;
+	from = 5;
+	to = 45;
+
+	lineLineFromTo = computeLine(points, positionFromTo, 2, 6, maxError);
+	scene.showPoints(lineLineFromTo, 10, colorPoints);
+
+	polynomial = interpolationPolynomial(axisDomain, axisCodomain, lineLineFromTo);
+	try {
+		lineInterpolation = polynomialVector2vtkPoints(axisConst, height, polynomial, axisDomain, from, to,
+				0.5);
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
+
+	scene.showLine(lineInterpolation, colorLine);
+//=====from (-10,10,10)
+
+
+//----from (10,20,40)
+	axisDomain = 2;
+	axisCodomain = 1;
+	axisConst = 0;
+	positionFromTo.at(0).at(0) = true;
+	positionFromTo.at(0).at(1) = true;
+	positionFromTo.at(0).at(2) = true;
+	positionFromTo.at(1).at(0) = true;
+	positionFromTo.at(1).at(1) = true;
+	positionFromTo.at(1).at(2) = false;
+
+	height = 10;
+	from = 5;
+	to = 45;
+
+	lineLineFromTo = computeLine(points, positionFromTo, 2, 6, maxError);
+	scene.showPoints(lineLineFromTo, 10, colorPoints);
+
+	polynomial = interpolationPolynomial(axisDomain, axisCodomain, lineLineFromTo);
+	try {
+		lineInterpolation = polynomialVector2vtkPoints(axisConst, height, polynomial, axisDomain, from, to,
+				0.5);
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
+
+	scene.showLine(lineInterpolation, colorLine);
+
+
+
+	axisDomain = 0;
+	axisCodomain = 1;
+	axisConst = 2;
+	positionFromTo.at(0).at(0) = true;
+	positionFromTo.at(0).at(1) = true;
+	positionFromTo.at(0).at(2) = true;
+	positionFromTo.at(1).at(0) = false;
+	positionFromTo.at(1).at(1) = true;
+	positionFromTo.at(1).at(2) = true;
+
+	height = 40;
+	from = -15;
+	to = 15;
+
+	lineLineFromTo = computeLine(points, positionFromTo, 2, 6, maxError);
+	scene.showPoints(lineLineFromTo, 10, colorPoints);
+
+	polynomial = interpolationPolynomial(axisDomain, axisCodomain,
+			lineLineFromTo);
+	try {
+		lineInterpolation = polynomialVector2vtkPoints(axisConst, height,
+				polynomial, axisDomain, from, to, 0.5);
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
+
+	scene.showLine(lineInterpolation, colorLine);
+
+
+
+	axisDomain = 1;
+	axisCodomain = 0;
+	axisConst = 2;
+	positionFromTo.at(0).at(0) = true;
+	positionFromTo.at(0).at(1) = true;
+	positionFromTo.at(0).at(2) = true;
+	positionFromTo.at(1).at(0) = true;
+	positionFromTo.at(1).at(1) = false;
+	positionFromTo.at(1).at(2) = true;
+
+	height = 40;
+	from = 5;
+	to = 25;
+
+	lineLineFromTo = computeLine(points, positionFromTo, 2, 6, maxError);
+	scene.showPoints(lineLineFromTo, 10, colorPoints);
+
+	polynomial = interpolationPolynomial(axisDomain, axisCodomain,
+			lineLineFromTo);
+	try {
+		lineInterpolation = polynomialVector2vtkPoints(axisConst, height,
+				polynomial, axisDomain, from, to, 0.5);
+	} catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
+
+	scene.showLine(lineInterpolation, colorLine);
+
+	//====from (10,20,40)
+
+
+
+
+//TODO ==========
 
 	return 0;
 }

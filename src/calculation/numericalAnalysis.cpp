@@ -2,7 +2,7 @@
 #include <calculation/numericalAnalysis.h>
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
-//#include <list>
+#include <cmath>
 #include <vector>
 
 /**
@@ -21,7 +21,7 @@ std::vector<double> interpolationPolynomial(int domain, int codomain,
 
 
 	if(domain == codomain){
-		throw "Wrong axis ( interpolation ).\n";
+ 		throw "Wrong axis ( interpolation ).\n";
 	}
 
 	for (int nop = 0; nop < line->GetNumberOfPoints(); ++nop) {
