@@ -83,7 +83,17 @@ int main(int argc, char *argv[]) {
 	}
 
 	scene.showLine(lineInterpolation, colorLine);
+    
+    vtkSmartPointer<vtkPoints> lineLagrangeInterpolation;
+    
+    for (int i = from; i < to; i += 0.5)
+    {
+        lineLagrangeInterpolation->InsertNextPoint(i, lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), axisConst);
+    }
 
+    double lagrangeInterpolationLineColor[3] = { 0 , .2, .2 };
+
+    scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
 
 //----from (-10,10,10)
@@ -113,6 +123,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	scene.showLine(lineInterpolation, colorLine);
+    
+    
 
 
 
@@ -235,7 +247,6 @@ int main(int argc, char *argv[]) {
 	scene.showLine(lineInterpolation, colorLine);
 
 	//====from (10,20,40)
-
 
 
 
