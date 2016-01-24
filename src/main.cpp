@@ -84,14 +84,14 @@ int main(int argc, char *argv[]) {
 
 	scene.showLine(lineInterpolation, colorLine);
     
-    vtkSmartPointer<vtkPoints> lineLagrangeInterpolation;
+    vtkSmartPointer<vtkPoints> lineLagrangeInterpolation = vtkSmartPointer<vtkPoints>::New();
     
-    for (int i = from; i < to; i += 0.5)
+    for (double i = from; i <= to; i += 0.5)
     {
-        lineLagrangeInterpolation->InsertNextPoint(i, lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), axisConst);
+        lineLagrangeInterpolation->InsertNextPoint(i, lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), height);
     }
 
-    double lagrangeInterpolationLineColor[3] = { 0 , .2, .2 };
+    double lagrangeInterpolationLineColor[3] = {.7 , 0, .7};
 
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
@@ -124,9 +124,16 @@ int main(int argc, char *argv[]) {
 
 	scene.showLine(lineInterpolation, colorLine);
     
+    lineLagrangeInterpolation->Delete();
     
-
-
+    lineLagrangeInterpolation = vtkSmartPointer<vtkPoints>::New();
+    
+    for (double i = from; i <= to; i += 0.5)
+    {
+        lineLagrangeInterpolation->InsertNextPoint(lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), i, height);
+    }
+    
+    scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
 
 	axisDomain = 2;
@@ -155,6 +162,18 @@ int main(int argc, char *argv[]) {
 	}
 
 	scene.showLine(lineInterpolation, colorLine);
+    
+    lineLagrangeInterpolation->Delete();
+    
+    lineLagrangeInterpolation = vtkSmartPointer<vtkPoints>::New();
+    
+    for (double i = from; i <= to; i += 0.5)
+    {
+        lineLagrangeInterpolation->InsertNextPoint(height, lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), i);
+    }
+    
+    scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
+    
 //=====from (-10,10,10)
 
 
@@ -186,6 +205,16 @@ int main(int argc, char *argv[]) {
 
 	scene.showLine(lineInterpolation, colorLine);
 
+    lineLagrangeInterpolation->Delete();
+    
+    lineLagrangeInterpolation = vtkSmartPointer<vtkPoints>::New();
+    
+    for (double i = from; i <= to; i += 0.5)
+    {
+        lineLagrangeInterpolation->InsertNextPoint(height, lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), i);
+    }
+    
+    scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
 
 	axisDomain = 0;
@@ -216,7 +245,17 @@ int main(int argc, char *argv[]) {
 
 	scene.showLine(lineInterpolation, colorLine);
 
-
+    lineLagrangeInterpolation->Delete();
+    
+    lineLagrangeInterpolation = vtkSmartPointer<vtkPoints>::New();
+    
+    for (double i = from; i <= to; i += 0.5)
+    {
+        lineLagrangeInterpolation->InsertNextPoint(i, lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), height);
+    }
+    
+    scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
+    
 
 	axisDomain = 1;
 	axisCodomain = 0;
@@ -245,6 +284,17 @@ int main(int argc, char *argv[]) {
 	}
 
 	scene.showLine(lineInterpolation, colorLine);
+    
+    lineLagrangeInterpolation->Delete();
+    
+    lineLagrangeInterpolation = vtkSmartPointer<vtkPoints>::New();
+    
+    for (double i = from; i <= to; i += 0.5)
+    {
+        lineLagrangeInterpolation->InsertNextPoint(lagrangeInterpolation(axisDomain, axisCodomain, lineLineFromTo, i), i, height);
+    }
+    
+    scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
 	//====from (10,20,40)
 
