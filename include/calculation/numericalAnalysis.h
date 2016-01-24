@@ -13,3 +13,6 @@
  */
 std::vector<double> interpolationPolynomial(int domain, int codomain,
 		vtkSmartPointer<vtkPoints> line);
+
+double lagrangeInterpolation(int domain, int codomain,
+                                          vtkSmartPointer<vtkPoints> line, double atValue);
