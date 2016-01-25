@@ -16,3 +16,6 @@ std::vector<double> interpolationPolynomial(int domain, int codomain,
 
 double lagrangeInterpolation(int domain, int codomain,
                                           vtkSmartPointer<vtkPoints> line, double atValue);
+
+std::vector<double> approximation(int domain, int codomain,
+		vtkSmartPointer<vtkPoints> linePoints, unsigned int degreeOfPolynomial);

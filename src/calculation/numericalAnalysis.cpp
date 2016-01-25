@@ -3,8 +3,9 @@
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
 #include <cmath>
-#include <vector>
 #include <iostream>
+#include <stdexcept>
+#include <vector>
 
 /**
  * ignored axis =
@@ -71,3 +72,62 @@ double lagrangeInterpolation(int domain, int codomain,
     
     return lagrangeAtValue;
 }
+
+
+std::vector<double> approximation(int domain, int codomain,
+		vtkSmartPointer<vtkPoints> linePoints, unsigned int degreeOfPolynomial){
+
+
+	if( domain < 0 || domain > 2){
+		throw std::runtime_error("Wrong domain axis.");
+	} else 	if( codomain < 0 || codomain > 2){
+		throw std::runtime_error("Wrong codomain axis.");
+	}
+
+	if(degreeOfPolynomial > linePoints->GetNumberOfPoints()){
+		degreeOfPolynomial = linePoints->GetNumberOfPoints();
+	}
+
+	// degreeOfPolynomial rows for degreeOfPolynomial+1 elements
+	std::vector<std::vector<double>> matrix(degreeOfPolynomial+1,
+			std::vector<double>(degreeOfPolynomial + 2, 0));
+
+	std::vector<double> mValues(2*degreeOfPolynomial+1);
+
+	for(unsigned int coef = 0; coef <= 2*degreeOfPolynomial; ++coef){
+		for(unsigned int p =0; p < linePoints->GetNumberOfPoints(); ++p ){
+			mValues.at(coef) += pow( linePoints->GetPoint(p)[domain], coef);
+		}
+	}
+
+	// make matrix
+	for(unsigned int r = 0; r <= degreeOfPolynomial; ++r){
+		for(unsigned int c = 0; c <= degreeOfPolynomial; ++c){
+			matrix.at(r).at(c) = mValues.at(r+c);
+
+		}
+
+		// last column
+		for(unsigned int p =0; p < linePoints->GetNumberOfPoints(); ++p ){
+			matrix.at(r).at(degreeOfPolynomial+1) += linePoints->GetPoint(p)[codomain] * pow( linePoints->GetPoint(p)[domain], r);
+		}
+
+	}
+
+	std::vector<double> polynomial = gauss(matrix);
+	// in this method we get coefficient from last to first.
+
+	double temp = 0;
+	double polSize = polynomial.size();
+	for(unsigned int c = 0; c < polSize/2; ++c){
+		temp = polynomial.at(c);
+		polynomial.at(c) = polynomial.at(polSize-1-c);
+		polynomial.at(polSize-1-c) = temp;
+
+	}
+
+	return polynomial;
+}
+
+
+

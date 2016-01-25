@@ -44,8 +44,11 @@ int main(int argc, char *argv[]) {
 	//TODO ----------
 	double colorPoints[3] = { .7, .7, 0 };
 	double colorLine[3] = { 0 , .7, .7 };
+    double colorApproximatedLine[3] = {.2 , 5, .7};
 	vtkSmartPointer<vtkPoints> lineInterpolation;
 	vtkSmartPointer<vtkPoints> lineLineFromTo;
+    vtkSmartPointer<vtkPoints> lineApproximated = vtkSmartPointer<vtkPoints>::New();
+
 	int axisDomain;
 	int axisCodomain;
 	int axisConst;
@@ -53,8 +56,10 @@ int main(int argc, char *argv[]) {
 	double from;
 	double to;
 	double maxError = 0.3;
+	double degreeOfApproximatedPolinomial = 1;
 
 	std::vector<double> polynomial;
+	std::vector<double> polynomialApproximated;
 	std::vector<std::vector<bool>> positionFromTo(2, std::vector<bool>(3));
 
 	axisDomain = 0;
@@ -94,6 +99,21 @@ int main(int argc, char *argv[]) {
     double lagrangeInterpolationLineColor[3] = {.7 , 0, .7};
 
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
+
+
+    polynomialApproximated = approximation(axisDomain, axisCodomain, lineLineFromTo, degreeOfApproximatedPolinomial);
+    lineApproximated = polynomialVector2vtkPoints(axisConst, height, polynomialApproximated, axisDomain, from, to,
+			0.5);
+    scene.showLine(lineApproximated, colorApproximatedLine);
+
+
+
+
+
+
+
+
+
 
 
 //----from (-10,10,10)
@@ -136,6 +156,14 @@ int main(int argc, char *argv[]) {
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
 
+    polynomialApproximated = approximation(axisDomain, axisCodomain, lineLineFromTo, degreeOfApproximatedPolinomial);
+    lineApproximated = polynomialVector2vtkPoints(axisConst, height, polynomialApproximated, axisDomain, from, to,
+			0.5);
+    scene.showLine(lineApproximated, colorApproximatedLine);
+
+
+
+
 	axisDomain = 2;
 	axisCodomain = 1;
 	axisConst = 0;
@@ -174,6 +202,11 @@ int main(int argc, char *argv[]) {
     
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
     
+
+    polynomialApproximated = approximation(axisDomain, axisCodomain, lineLineFromTo, degreeOfApproximatedPolinomial);
+    lineApproximated = polynomialVector2vtkPoints(axisConst, height, polynomialApproximated, axisDomain, from, to,
+			0.5);
+    scene.showLine(lineApproximated, colorApproximatedLine);
 //=====from (-10,10,10)
 
 
@@ -216,6 +249,12 @@ int main(int argc, char *argv[]) {
     
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
+    polynomialApproximated = approximation(axisDomain, axisCodomain, lineLineFromTo, degreeOfApproximatedPolinomial);
+    lineApproximated = polynomialVector2vtkPoints(axisConst, height, polynomialApproximated, axisDomain, from, to,
+			0.5);
+    scene.showLine(lineApproximated, colorApproximatedLine);
+
+
 
 	axisDomain = 0;
 	axisCodomain = 1;
@@ -257,6 +296,14 @@ int main(int argc, char *argv[]) {
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
     
 
+    polynomialApproximated = approximation(axisDomain, axisCodomain, lineLineFromTo, degreeOfApproximatedPolinomial);
+    lineApproximated = polynomialVector2vtkPoints(axisConst, height, polynomialApproximated, axisDomain, from, to,
+			0.5);
+    scene.showLine(lineApproximated, colorApproximatedLine);
+
+
+
+
 	axisDomain = 1;
 	axisCodomain = 0;
 	axisConst = 2;
@@ -296,9 +343,14 @@ int main(int argc, char *argv[]) {
     
     scene.showLine(lineLagrangeInterpolation, lagrangeInterpolationLineColor);
 
+
+
+    polynomialApproximated = approximation(axisDomain, axisCodomain, lineLineFromTo, degreeOfApproximatedPolinomial);
+    lineApproximated = polynomialVector2vtkPoints(axisConst, height, polynomialApproximated, axisDomain, from, to,
+			0.5);
+    scene.showLine(lineApproximated, colorApproximatedLine);
+
 	//====from (10,20,40)
-
-
 
 //TODO ==========
 

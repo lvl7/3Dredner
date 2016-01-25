@@ -54,10 +54,8 @@ vtkSmartPointer<vtkPoints> computeLine(vtkSmartPointer<vtkPoints> pointsCuboid,
 		}
 	}
 
-	//TODO -----
-	std::cout << "from: " << from[0] << " " << from[1] << " " << from[2] << std::endl;
-	std::cout << "to: " << to[0] << " " << to[1] << " " << to[2] << std::endl;
-	//TODO =======
+//	std::cout << "from: " << from[0] << " " << from[1] << " " << from[2] << std::endl;
+//	std::cout << "to: " << to[0] << " " << to[1] << " " << to[2] << std::endl;
 
 	int noPoints = rand()%(maxPoints - minPoints) + minPoints;
 
@@ -72,10 +70,9 @@ vtkSmartPointer<vtkPoints> computeLine(vtkSmartPointer<vtkPoints> pointsCuboid,
 				from[1] + partDistance * (to[1] - from[1]) + ((rand()%1000/1000.0)*2-1) * maxError,
 				from[2] + partDistance * (to[2] - from[2]) + ((rand()%1000/1000.0)*2-1) * maxError);
 
-		//TODO
-		std::cout << partDistance << " " << line->GetPoint(i)[0] << " "
-				<< line->GetPoint(i)[1] << " " << line->GetPoint(i)[2]
-				<< std::endl;
+//		std::cout << partDistance << " " << line->GetPoint(i)[0] << " "
+//				<< line->GetPoint(i)[1] << " " << line->GetPoint(i)[2]
+//				<< std::endl;
 	}
 
 	return line;
